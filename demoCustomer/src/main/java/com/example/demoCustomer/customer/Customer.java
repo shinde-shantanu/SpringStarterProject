@@ -1,5 +1,9 @@
 package com.example.demoCustomer.customer;
 
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
+
+@Table
 public class Customer {
 
     private String firstName;
@@ -7,6 +11,8 @@ public class Customer {
     private Address address;
     private String phoneNo; //Need to check for validity
     private String conversationId;
+
+    @PrimaryKey
     private String billingAccountNumber;
 
     public Customer() {
