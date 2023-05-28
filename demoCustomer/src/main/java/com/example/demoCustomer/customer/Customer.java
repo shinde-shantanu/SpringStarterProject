@@ -1,5 +1,6 @@
 package com.example.demoCustomer.customer;
 
+import org.springframework.data.cassandra.core.mapping.Embedded;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -8,6 +9,7 @@ public class Customer {
 
     private String firstName;
     private String lastName;
+    @Embedded.Nullable
     private Address address;
     private String phoneNo; //Need to check for validity
     private String conversationId;
