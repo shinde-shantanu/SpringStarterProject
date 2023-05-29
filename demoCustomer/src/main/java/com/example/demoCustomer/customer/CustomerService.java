@@ -2,6 +2,7 @@ package com.example.demoCustomer.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -37,7 +38,7 @@ public class CustomerService {
         return String.format("%09d", randomNumber);
     }
 
-    public void createCustomer(Customer customer) {
+    public ResponseEntity<String> createCustomer(Customer customer) {
 
         //Generating Billing Account Number
         String billingAccountNumber = getRandomNineDigitNumber();
@@ -69,5 +70,7 @@ public class CustomerService {
         }
 
         customerRepository.save(customer);
+
+        return ResponseEntity.ok("Customer created successfully");
     }
 }

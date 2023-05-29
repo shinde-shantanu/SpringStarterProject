@@ -1,6 +1,7 @@
 package com.example.demoCustomer.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,10 +28,10 @@ public class CustomerController {
     }
 
     @PutMapping("/create")
-    public void createCustomer(@RequestBody Customer customer,
-                               @RequestHeader("ConversationId") String conversationId) {
+    public ResponseEntity<String> createCustomer(@RequestBody Customer customer,
+                                         @RequestHeader("ConversationId") String conversationId) {
         customer.setConversationId(conversationId);
-        customerService.createCustomer(customer);
+        return customerService.createCustomer(customer);
     }
 
 }
