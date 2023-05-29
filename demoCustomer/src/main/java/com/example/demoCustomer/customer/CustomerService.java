@@ -62,6 +62,12 @@ public class CustomerService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid State");
         }
 
+        //Checking for valid phone number
+        String phoneNo = customer.getPhoneNo();
+        if(!phoneNo.matches("\\d{10}")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Phone Number");
+        }
+
         customerRepository.save(customer);
     }
 }

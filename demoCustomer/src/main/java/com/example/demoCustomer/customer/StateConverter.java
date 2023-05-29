@@ -14,7 +14,6 @@ public class StateConverter {
     public StateConverter(@Value("${states.mapping}") String stateMapping) {
         this.stateMapping = new HashMap<>();
         String[] entries = stateMapping.split(",");
-        System.out.println(entries.length);
         for(String entry : entries) {
             String[] state = entry.split(":");
             if(state.length == 2){
