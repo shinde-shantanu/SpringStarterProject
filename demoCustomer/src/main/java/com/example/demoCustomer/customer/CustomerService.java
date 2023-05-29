@@ -13,10 +13,12 @@ import java.util.Random;
 public class CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final StateConverter stateConverter;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, StateConverter stateConverter) {
         this.customerRepository = customerRepository;
+        this.stateConverter = stateConverter;
     }
 
     public String hello(){
@@ -50,6 +52,14 @@ public class CustomerService {
         String zip = customer.getAddress().getZip();
         if(!zip.matches("\\d{5}")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Zip code");
+        }
+
+        //Conversion to State Code
+        if(stateConverter.isValidState(customer.getAddress().getState())) {
+            customer.getAddress().setState(stateConverter.convertToCode(customer.getAddress().getState()));
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid State");
         }
 
         customerRepository.save(customer);
