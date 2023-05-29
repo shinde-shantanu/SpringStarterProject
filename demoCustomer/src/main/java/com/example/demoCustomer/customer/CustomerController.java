@@ -27,7 +27,9 @@ public class CustomerController {
     }
 
     @PutMapping("/create")
-    public void createCustomer(@RequestBody Customer customer) {
+    public void createCustomer(@RequestBody Customer customer,
+                               @RequestHeader("ConversationId") String conversationId) {
+        customer.setConversationId(conversationId);
         customerService.createCustomer(customer);
     }
 
