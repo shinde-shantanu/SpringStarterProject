@@ -12,6 +12,7 @@ public class Customer {
     @Embedded.Nullable
     private Address address;
     private String phoneNo; //Need to check for validity
+    private String emailId;
     private String conversationId;
 
     @PrimaryKey
@@ -20,20 +21,22 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, Address address, String phoneNo, String conversationId, String billingAccountNumber) {
+    public Customer(String firstName, String lastName, Address address, String phoneNo, String emailId, String conversationId, String billingAccountNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNo = phoneNo;
+        this.emailId = emailId;
         this.conversationId = conversationId;
         this.billingAccountNumber = billingAccountNumber;
     }
 
-    public Customer(String firstName, String lastName, Address address, String phoneNo, String conversationId) {
+    public Customer(String firstName, String lastName, Address address, String phoneNo, String emailId, String conversationId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNo = phoneNo;
+        this.emailId = emailId;
         this.conversationId = conversationId;
     }
 
@@ -85,6 +88,14 @@ public class Customer {
         this.billingAccountNumber = billingAccountNumber;
     }
 
+    public String getEmailId() {
+        return emailId;
+    }
+
+    public void setEmailId(String emailId) {
+        this.emailId = emailId;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -92,6 +103,7 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", address=" + address +
                 ", phoneNo='" + phoneNo + '\'' +
+                ", emailId='" + emailId + '\'' +
                 ", conversationId='" + conversationId + '\'' +
                 ", billingAccountNumber='" + billingAccountNumber + '\'' +
                 '}';
