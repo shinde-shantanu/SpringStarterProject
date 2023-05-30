@@ -78,4 +78,13 @@ public class CustomerService {
         Optional<Customer> customer = customerRepository.findById(billingAccountNumber);
         return customer.get();
     }
+
+    public ResponseEntity<String> deleteCustomer(String billingAccountNumber) {
+        boolean exists = customerRepository.existsById(billingAccountNumber);
+        if(!exists) {
+            return ResponseEntity.notFound().build();
+        }
+        customerRepository.deleteById(billingAccountNumber);
+        return ResponseEntity.ok("Customer deleted successfully");
+    }
 }

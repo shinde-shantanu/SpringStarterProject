@@ -39,4 +39,9 @@ public class CustomerController {
         return customerService.getCustomer(billingAccountNumber);
     }
 
+    @DeleteMapping("/del/{billingAccountNumber}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable String billingAccountNumber) {
+        return customerService.deleteCustomer(billingAccountNumber);
+    }
+
 }
