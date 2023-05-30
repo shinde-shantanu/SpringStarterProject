@@ -73,4 +73,9 @@ public class CustomerService {
 
         return ResponseEntity.ok("Customer created successfully");
     }
+
+    public Customer getCustomer(String billingAccountNumber) {
+        Optional<Customer> customer = customerRepository.findById(billingAccountNumber);
+        return customer.get();
+    }
 }

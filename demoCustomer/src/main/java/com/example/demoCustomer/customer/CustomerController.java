@@ -34,4 +34,9 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
+    @GetMapping("/get/{billingAccountNumber}")
+    public Customer getCustomer(@PathVariable String billingAccountNumber) {
+        return customerService.getCustomer(billingAccountNumber);
+    }
+
 }
