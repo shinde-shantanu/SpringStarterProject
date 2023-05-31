@@ -1,5 +1,6 @@
 package com.example.demoCustomer.customer;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.SchemaAction;
@@ -7,27 +8,36 @@ import org.springframework.data.cassandra.config.SchemaAction;
 @Configuration
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
+    @Value("${cassandra.contactPoints}")
+    private String contactPoints;
+
+    @Value("${cassandra.port}")
+    private int port;
+
+    @Value("${cassandra.keyspaceName}")
+    private String keyspaceName;
+
+    @Value("${cassandra.schemaAction}")
+    private String schemaAction;
+
     @Override
     protected String getKeyspaceName() {
-        return "customerDB";
+        return keyspaceName;
     }
 
     @Override
     protected String getContactPoints() {
-        // Return the comma-separated list of Cassandra contact points
-        return "localhost";
+        return contactPoints;
     }
 
     @Override
     protected int getPort() {
-        // Return the Cassandra port
-        return 9042;
+        return port;
     }
 
     @Override
     public SchemaAction getSchemaAction() {
-        // Return the desired schema action
-        return SchemaAction.RECREATE_DROP_UNUSED;
+        return SchemaAction.valueOf(schemaAction);
     }
 
 }
