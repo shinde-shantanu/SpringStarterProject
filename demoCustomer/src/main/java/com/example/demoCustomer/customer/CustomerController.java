@@ -34,6 +34,11 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
+    @PutMapping("/update/{billingAccountNumber}")
+    public ResponseEntity<String> updateCustomer(@PathVariable String billingAccountNumber, @RequestBody Customer customer) {
+        return customerService.updateCustomer(billingAccountNumber, customer);
+    }
+
     @GetMapping("/get/{billingAccountNumber}")
     public Customer getCustomer(@PathVariable String billingAccountNumber) {
         return customerService.getCustomer(billingAccountNumber);

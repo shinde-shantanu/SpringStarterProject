@@ -5,8 +5,8 @@ public class Address {
     private String line1;
     private String line2;
     private String city;
-    private String zip; //Need to put validation
-    private String state; //need to make a mapper for this
+    private String zip;
+    private String state;
 
     public Address() {
     }

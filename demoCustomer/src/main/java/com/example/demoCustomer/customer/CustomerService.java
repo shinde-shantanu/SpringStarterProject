@@ -87,4 +87,48 @@ public class CustomerService {
         customerRepository.deleteById(billingAccountNumber);
         return ResponseEntity.ok("Customer deleted successfully");
     }
+
+    public ResponseEntity<String> updateCustomer(String billingAccountNumber, Customer updateCustomer) {  //Need to maintain customer history
+
+        Optional<Customer> optionalCustomer = customerRepository.findById(billingAccountNumber);
+        if(optionalCustomer.isPresent()){
+            Customer customer = optionalCustomer.get();
+
+            if(updateCustomer.getFirstName() != null) {
+                customer.setFirstName(updateCustomer.getFirstName());
+            }
+            if(updateCustomer.getLastName() != null) {
+                customer.setLastName(updateCustomer.getLastName());
+            }
+            if(updateCustomer.getAddress().getLine1() != null) {
+                customer.getAddress().setLine1(updateCustomer.getAddress().getLine1());
+            }
+            if(updateCustomer.getAddress().getLine2() != null) {
+                customer.getAddress().setLine2(updateCustomer.getAddress().getLine2());
+            }
+            if(updateCustomer.getAddress().getCity() != null) {
+                customer.getAddress().setCity(updateCustomer.getAddress().getCity());
+            }
+            if(updateCustomer.getAddress().getZip() != null) {
+                customer.getAddress().setZip(updateCustomer.getAddress().getZip());
+            }
+            if(updateCustomer.getAddress().getState() != null) {
+                customer.getAddress().setState(updateCustomer.getAddress().getState());
+            }
+            if(updateCustomer.getEmailId() != null) {
+                customer.setEmailId(updateCustomer.getEmailId());
+            }
+            if(updateCustomer.getPhoneNo() != null) {
+                customer.setPhoneNo(updateCustomer.getPhoneNo());
+            }
+
+            customerRepository.save(customer);
+
+            return ResponseEntity.ok("Customer updated successfully");
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

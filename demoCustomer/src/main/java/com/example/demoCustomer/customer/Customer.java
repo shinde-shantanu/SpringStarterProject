@@ -11,7 +11,7 @@ public class Customer {
     private String lastName;
     @Embedded.Nullable
     private Address address;
-    private String phoneNo; //Need to check for validity
+    private String phoneNo;
     private String emailId;
     private String conversationId;
 
