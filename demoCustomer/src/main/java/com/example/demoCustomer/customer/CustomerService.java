@@ -110,15 +110,29 @@ public class CustomerService {
                 customer.getAddress().setCity(updateCustomer.getAddress().getCity());
             }
             if(updateCustomer.getAddress().getZip() != null) {
+                if(!updateCustomer.getAddress().getZip().matches("\\d{5}")){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Zip code");
+                }
                 customer.getAddress().setZip(updateCustomer.getAddress().getZip());
             }
             if(updateCustomer.getAddress().getState() != null) {
+                if(updateCustomer.getAddress().getState().length() != 2){
+                    if(stateConverter.isValidState(updateCustomer.getAddress().getState())) {
+                        updateCustomer.getAddress().setState(stateConverter.convertToCode(updateCustomer.getAddress().getState()));
+                    }
+                    else {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid State");
+                    }
+                }
                 customer.getAddress().setState(updateCustomer.getAddress().getState());
             }
             if(updateCustomer.getEmailId() != null) {
                 customer.setEmailId(updateCustomer.getEmailId());
             }
             if(updateCustomer.getPhoneNo() != null) {
+                if(!updateCustomer.getPhoneNo().matches("\\d{10}")){
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Phone Number");
+                }
                 customer.setPhoneNo(updateCustomer.getPhoneNo());
             }
 
