@@ -45,9 +45,6 @@ public class SolaceService {
 
     @PostConstruct
     public void initialize() {
-
-        System.out.println("vpnName" + vpnName);
-
         properties = new Properties();
         properties.setProperty(SolaceProperties.TransportLayerProperties.HOST, host + ":" + port ); //host:port
         properties.setProperty(SolaceProperties.ServiceProperties.VPN_NAME, vpnName);
