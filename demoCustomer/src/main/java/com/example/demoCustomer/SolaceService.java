@@ -26,6 +26,9 @@ public class SolaceService {
     @Value("${solace.username}")
     private String username;
 
+    @Value("${solace.queue}")
+    private String queue;
+
     @Value("${solace.password}")
     private String password;
 
@@ -76,4 +79,7 @@ public class SolaceService {
         this.messageBuilder = messageBuilder;
     }
 
+    public String getQueue() {
+        return queue;
+    }
 }
