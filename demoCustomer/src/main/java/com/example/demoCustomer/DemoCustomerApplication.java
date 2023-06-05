@@ -9,6 +9,7 @@ import com.solace.messaging.publisher.OutboundMessage;
 import com.solace.messaging.publisher.OutboundMessageBuilder;
 import com.solace.messaging.publisher.PersistentMessagePublisher;
 import com.solace.messaging.resources.Topic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,9 @@ import java.util.Properties;
 @SpringBootApplication
 @RestController
 public class DemoCustomerApplication {
+
+	@Autowired
+	private SolaceService solaceService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoCustomerApplication.class, args);
@@ -44,6 +48,17 @@ public class DemoCustomerApplication {
 		String topicString = "solace/samples" + "Java".toLowerCase() + "/hello/" + "uni";
 		try {
 			publisher.publish(message, Topic.of("loggingQueue"));
+		} catch (PubSubPlusClientException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Bean
+	public void makeMessage2() throws InterruptedException {
+
+		OutboundMessage message = solaceService.getMessageBuilder().build(String.format("Hello world! 2"));
+		try {
+			solaceService.getPublisher().publish(message, Topic.of("loggingQueue"));
 		} catch (PubSubPlusClientException e) {
 			throw new RuntimeException(e);
 		}
