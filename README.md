@@ -6,6 +6,7 @@ Contents:
 - [Setup Solace Queue](https://github.com/shinde-shantanu/SpringStarterProject#setup-solace-for-jms-log-message-queuing)
 - [Deployment on Minikube](https://github.com/shinde-shantanu/SpringStarterProject#deployment-on-minikube)
 - [Accessing Swagger-UI](https://github.com/shinde-shantanu/SpringStarterProject#access-swagger-ui)
+- [Things left to do]()
 
 
 
@@ -62,6 +63,10 @@ Create the **customerDB** keyspace:
 CREATE KEYSPACE customerDB WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
 ```
 
+### Deploying Cassandra on Minikube:
+
+If you want to deploy Cassandra DB on Minikube instead of running it locally, checkout this [link](https://kubernetes.io/docs/tutorials/stateful-application/cassandra/). Not implemented here as my local machine ran out of memory!!!.
+
 
 
 
@@ -111,7 +116,7 @@ docker-compose -f PubSubStandard_singleNode.yml up -d
 ### Step 5: Manage the PubSub+ Software Event Broker
 
 To start issuing configuration or monitoring commands on the event broker, you can access Broker Manager or the Solace CLI. To access PubSub+ Broker Manager:
-1. Open a browser and enter http://localhost:8080.
+1. Open a browser and enter http://localhost:8080. ([8081](http://localhost:8080) if you changed it)
 2. Log in as user admin with password admin.
 
 ### Step 6: Setup a new Message VPN:
@@ -129,6 +134,10 @@ The select ``` Set up Default User -> ``` and set **admin** as username and pass
 Open the **CustomerApplicationMessages**. Got to ``` System -> Uset Mgmt -> Users ``` and add a user with **admin** as password and user name with all accesses granted if not already present.
 
 Go to ``` Messaging -> Queues ``` and Select ``` + Queue ```. Give it a name **loggingQueue** and add **admin** as owner.
+
+### Solace Queue demonstration:
+
+To check out how Solace queues work open ``` Messaging -> Try Me! ```. Also refer [this](https://docs.solace.com/Cloud/ggs_tryme.htm).
 
 
 
@@ -300,3 +309,21 @@ Use the follwowing format:
 ```
 http://localhost:<port>/swagger-ui.html
 ```
+
+
+
+
+##
+## To Do
+
+Stuff left to do on this project:
+- Maintain Customer History in Update Customer
+- Write log messages to Cassandra
+- Develop small UI page to capture that form data from frontend
+- Integrate UI with backend
+- Deploy UI into minikube
+- Make documentation conataining:
+  1. Overall architecture diagram showing front end and backend components
+  2. Physical architecture
+  3. Sequence diagram
+  4. Technical documentation 
