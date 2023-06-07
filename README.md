@@ -276,3 +276,15 @@ Now that we have created a service, we can retrive the url for the service using
 minikube service springstarterproject-service --url
 ```
 The displayed url is the host and port that we can query using postman or a web browser to run our microservices.
+
+
+
+
+##
+## Access Swagger UI
+
+Inorder to access Swagger-UI after deploying on Minikube use the url returned by the baove command followed by **swagger-ui.html**.
+Use the follwowing format:
+```
+http://localhost:<port>/swagger-ui.html
+```
