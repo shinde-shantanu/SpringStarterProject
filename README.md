@@ -50,6 +50,77 @@ Create the **customerDB** keyspace:
 CREATE KEYSPACE customerDB WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
 ```
 
+
+
+
+##
+## Setup Solace for JMS log message queuing
+
+
+Follwing steps are for setting up Solace for JMS messaging to a loggingQueue
+
+### Step 1: Install prerequisites
+
+You need have Docker installed. Installation can be found [here](https://docs.docker.com/engine/install/).
+Install [Minikube](https://minikube.sigs.k8s.io/docs/start/).
+
+## Step 2: Download the Docker Compose Template
+
+Clone the GitHub repository containing the Docker Compose template.
+```
+git clone https://github.com/SolaceLabs/solace-single-docker-compose.git
+cd solace-single-docker-compose/template
+```
+
+## Step 3 (Optional): Change the ports before composing
+
+This step is optional and is mostly required in development as the default port for spring boot apllication is 8080. The JMS solace application also used the 8080 port for it's SEMP/PubSub+ Manager. In order to do this, open the **template/PubSubStandard_singleNode.yml** file in the cloned repository and change the line:
+```
+...
+#SEMP / PubSub+ Manager
+- '8080:8080'
+...
+```
+to:
+```
+...
+#SEMP / PubSub+ Manager
+- '8081:8080'
+...
+```
+
+### Step 4: Create a PubSub+ Software Event Broker
+
+Run the following command to create a PubSub+ software event broker using the Compose template:
+```
+docker-compose -f PubSubStandard_singleNode.yml up -d
+```
+
+### Step 5: Manage the PubSub+ Software Event Broker
+
+To start issuing configuration or monitoring commands on the event broker, you can access Broker Manager or the Solace CLI. To access PubSub+ Broker Manager:
+1. Open a browser and enter http://localhost:8080.
+2. Log in as user admin with password admin.
+
+### Step 6: Setup a new Message VPN:
+
+In ``` Messaging -> Message VPNs ``` select ``` + Message VPN ``` and fill out the following:
+
+
+![image](https://github.com/shinde-shantanu/SpringStarterProject/assets/48611375/700671c9-30e5-4bb7-9eaf-ad64133ab6ae)
+
+
+The select ``` Set up Default User -> ``` and set **admin** as username and password then press ``` Create ```.
+
+### Step 7: Setup the queue:
+
+Open the **CustomerApplicationMessages**. Got to ``` System -> Uset Mgmt -> Users ``` and add a user with **admin** as password and user name with all accesses granted if not already present.
+
+Go to ``` Messaging -> Queues ``` and Select ``` + Queue ```. Give it a name **loggingQueue** and add **admin** as owner.
+
+
+
+
 ##
 ## Deployment on minikube:
 
