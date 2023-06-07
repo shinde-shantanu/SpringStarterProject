@@ -1,16 +1,28 @@
 # SpringStarterProject
 
+Contents:
+
+- [Setup Cassandra DB](https://github.com/shinde-shantanu/SpringStarterProject#cassandra-db-setup)
+- [Setup Solace Queue](https://github.com/shinde-shantanu/SpringStarterProject#setup-solace-for-jms-log-message-queuing)
+- [Deployment on Minikube](https://github.com/shinde-shantanu/SpringStarterProject#deployment-on-minikube)
+- [Accessing Swagger-UI](https://github.com/shinde-shantanu/SpringStarterProject#access-swagger-ui)
+
+
+
+
 ##
 ## Cassandra db setup:
 
 Following are the steps I used to install cassandra db on my macbook.
 
 ### Step 1: Install Homebrew
+
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
 ### Step 2: Install OpenJDK 11
+
 ```
 brew install openjdk@11
 ```
@@ -64,7 +76,7 @@ Follwing steps are for setting up Solace for JMS messaging to a loggingQueue
 You need have Docker installed. Installation can be found [here](https://docs.docker.com/engine/install/).
 Install [Minikube](https://minikube.sigs.k8s.io/docs/start/).
 
-## Step 2: Download the Docker Compose Template
+### Step 2: Download the Docker Compose Template
 
 Clone the GitHub repository containing the Docker Compose template.
 ```
@@ -72,7 +84,7 @@ git clone https://github.com/SolaceLabs/solace-single-docker-compose.git
 cd solace-single-docker-compose/template
 ```
 
-## Step 3 (Optional): Change the ports before composing
+### Step 3 (Optional): Change the ports before composing
 
 This step is optional and is mostly required in development as the default port for spring boot apllication is 8080. The JMS solace application also used the 8080 port for it's SEMP/PubSub+ Manager. In order to do this, open the **template/PubSubStandard_singleNode.yml** file in the cloned repository and change the line:
 ```
