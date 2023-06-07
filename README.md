@@ -1,6 +1,59 @@
 # SpringStarterProject
 
+##
+## Cassandra db setup:
+
+Following are the steps I used to install cassandra db on my macbook.
+
+### Step 1: Install Homebrew
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+### Step 2: Install OpenJDK 11
+```
+brew install openjdk@11
+```
+
+### Step 3: Set up Java environment variable
+
+Determine which shell profile file you are using. Common shell profile files are **~/.bash_profile** for Bash, **~/.zshrc** for Zsh, and **~/.bashrc** for Bash (on some systems). In my case it was **~/.zshrc**.
+Run the following command to open the shell profile file using a text editor (replace **~/.zshrc** with the appropriate file if you're using a different shell):
+```
+open -a TextEdit ~/.zshrc
+```
+Add the following lines at the end of the file:
+```
+export JAVA_HOME="/usr/local/opt/openjdk@11"
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+These lines set the JAVA_HOME environment variable to the OpenJDK 11 installation path and add it to the PATH variable.
+Save the file and close the text editor.
+To apply the changes, run the following command in the Terminal:
+```
+source ~/.zshrc
+```
+Check installation using the following command:
+```
+cqlsh
+```
+This should open up the CQL shell.
+
+### Step 4: Create the keyspace
+
+Launch the CQL shell using:
+```
+cqlsh
+```
+Create the **customerDB** keyspace:
+```
+CREATE KEYSPACE customerDB WITH replication = {'class':'SimpleStrategy', 'replication_factor':1};
+```
+
+##
 ## Deployment on minikube:
+
+Follwing steps can be used to deploy a Spring Boot application on Minikube capable of querying a locally hosted cassandra db and a Solace queue.
 
 ### Step 1: Install prerequisites
 
