@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -82,8 +84,14 @@ public class CustomerService {
 
     public Customer getCustomer(String billingAccountNumber) {
         Optional<Customer> customer = customerRepository.findById(billingAccountNumber);
-        loggingService.makeInfoLog("Customer: " + billingAccountNumber + " found");
-        return customer.get();
+        if(customer.isPresent()) {
+            loggingService.makeInfoLog("Customer: " + billingAccountNumber + " found");
+            return customer.get();
+        }
+        else {
+            loggingService.makeInfoLog("Customer: " + billingAccountNumber + " not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer: " + billingAccountNumber + " not found");
+        }
     }
 
     public ResponseEntity<String> deleteCustomer(String billingAccountNumber) {
@@ -97,25 +105,32 @@ public class CustomerService {
         return ResponseEntity.ok("Customer deleted successfully");
     }
 
-    public ResponseEntity<String> updateCustomer(String billingAccountNumber, Customer updateCustomer) {  //Need to maintain customer history
+    public ResponseEntity<String> updateCustomer(String billingAccountNumber, Customer updateCustomer) {
 
         Optional<Customer> optionalCustomer = customerRepository.findById(billingAccountNumber);
         if(optionalCustomer.isPresent()){
             Customer customer = optionalCustomer.get();
 
+            UpdateHistory updateHistory = new UpdateHistory();
+
             if(updateCustomer.getFirstName() != null) {
+                updateHistory.setFirstNameHist(customer.getFirstName());
                 customer.setFirstName(updateCustomer.getFirstName());
             }
             if(updateCustomer.getLastName() != null) {
+                updateHistory.setLastNameHist(customer.getLastName());
                 customer.setLastName(updateCustomer.getLastName());
             }
             if(updateCustomer.getAddress().getLine1() != null) {
+                updateHistory.setAddressLine1Hist(customer.getAddress().getLine1());
                 customer.getAddress().setLine1(updateCustomer.getAddress().getLine1());
             }
             if(updateCustomer.getAddress().getLine2() != null) {
+                updateHistory.setAddressLine2Hist(customer.getAddress().getLine2());
                 customer.getAddress().setLine2(updateCustomer.getAddress().getLine2());
             }
             if(updateCustomer.getAddress().getCity() != null) {
+                updateHistory.setAddressCityHist(customer.getAddress().getCity());
                 customer.getAddress().setCity(updateCustomer.getAddress().getCity());
             }
             if(updateCustomer.getAddress().getZip() != null) {
@@ -123,6 +138,7 @@ public class CustomerService {
                     loggingService.makeErrorLog("Invalid Zip code: " + updateCustomer.getAddress().getZip());
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Zip code");
                 }
+                updateHistory.setAddressZipHist(customer.getAddress().getZip());
                 customer.getAddress().setZip(updateCustomer.getAddress().getZip());
             }
             if(updateCustomer.getAddress().getState() != null) {
@@ -135,9 +151,11 @@ public class CustomerService {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid State");
                     }
                 }
+                updateHistory.setAddressStateHist(customer.getAddress().getState());
                 customer.getAddress().setState(updateCustomer.getAddress().getState());
             }
             if(updateCustomer.getEmailId() != null) {
+                updateHistory.setEmailIdHist(customer.getEmailId());
                 customer.setEmailId(updateCustomer.getEmailId());
             }
             if(updateCustomer.getPhoneNo() != null) {
@@ -145,8 +163,16 @@ public class CustomerService {
                     loggingService.makeErrorLog("Invalid phoneNo.: " + updateCustomer.getPhoneNo());
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Phone Number");
                 }
+                updateHistory.setPhoneNoHist(customer.getPhoneNo());
                 customer.setPhoneNo(updateCustomer.getPhoneNo());
             }
+
+            if(customer.getUpdateHistories() == null) {
+                customer.setUpdateHistories(new ArrayList<>());
+            }
+
+            updateHistory.setTimestamp(LocalDateTime.now());
+            customer.getUpdateHistories().add(updateHistory);
 
             customerRepository.save(customer);
 

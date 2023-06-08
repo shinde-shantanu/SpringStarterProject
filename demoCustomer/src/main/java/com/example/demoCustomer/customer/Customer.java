@@ -4,6 +4,8 @@ import org.springframework.data.cassandra.core.mapping.Embedded;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.List;
+
 @Table
 public class Customer {
 
@@ -17,11 +19,12 @@ public class Customer {
 
     @PrimaryKey
     private String billingAccountNumber;
+    private List<UpdateHistory> updateHistories;
 
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, Address address, String phoneNo, String emailId, String conversationId, String billingAccountNumber) {
+    public Customer(String firstName, String lastName, Address address, String phoneNo, String emailId, String conversationId, String billingAccountNumber, List<UpdateHistory> updateHistories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -29,15 +32,17 @@ public class Customer {
         this.emailId = emailId;
         this.conversationId = conversationId;
         this.billingAccountNumber = billingAccountNumber;
+        this.updateHistories = updateHistories;
     }
 
-    public Customer(String firstName, String lastName, Address address, String phoneNo, String emailId, String conversationId) {
+    public Customer(String firstName, String lastName, Address address, String phoneNo, String emailId, String conversationId, List<UpdateHistory> updateHistories) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phoneNo = phoneNo;
         this.emailId = emailId;
         this.conversationId = conversationId;
+        this.updateHistories = updateHistories;
     }
 
     public String getFirstName() {
@@ -96,6 +101,14 @@ public class Customer {
         this.emailId = emailId;
     }
 
+    public List<UpdateHistory> getUpdateHistories() {
+        return updateHistories;
+    }
+
+    public void setUpdateHistories(List<UpdateHistory> updateHistories) {
+        this.updateHistories = updateHistories;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -106,6 +119,7 @@ public class Customer {
                 ", emailId='" + emailId + '\'' +
                 ", conversationId='" + conversationId + '\'' +
                 ", billingAccountNumber='" + billingAccountNumber + '\'' +
+                ", updateHistories=" + updateHistories +
                 '}';
     }
 }
