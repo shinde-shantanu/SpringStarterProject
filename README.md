@@ -317,7 +317,6 @@ http://localhost:<port>/swagger-ui.html
 ## To Do
 
 Stuff left to do on this project:
-- Maintain Customer History in Update Customer
 - Write log messages to Cassandra
 - Develop small UI page to capture that form data from frontend
 - Integrate UI with backend
