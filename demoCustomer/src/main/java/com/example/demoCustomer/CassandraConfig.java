@@ -1,4 +1,4 @@
-package com.example.demoCustomer.customer;
+package com.example.demoCustomer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
