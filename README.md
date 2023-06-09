@@ -22,6 +22,18 @@ Following are the steps I used to install cassandra db on my macbook.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
+The output if the installation looks like this:
+
+
+<img width="583" alt="image" src="https://github.com/shinde-shantanu/SpringStarterProject/assets/48611375/7812182e-6cfb-434e-a8f1-ac5d035ea9cc">
+
+
+Run the commands in the last line of the ouput to set homebrew to the PATH. In this case:
+```
+(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/shantanushinde/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
 ### Step 2: Install OpenJDK 11
 
 ```
@@ -46,7 +58,31 @@ To apply the changes, run the following command in the Terminal:
 ```
 source ~/.zshrc
 ```
+
+### Step 4: Install Cassandra
+
+To install Cassandra run:
+```
+brew install cassandra
+```
+
+To start cassandra and restart at login run:
+```
+brew services start cassandra
+```
+
 Check installation using the following command:
+```
+brew services list
+```
+
+It should show an output similar to:
+
+
+<img width="825" alt="image" src="https://github.com/shinde-shantanu/SpringStarterProject/assets/48611375/7f4748cd-01d4-4334-882c-073dbc03efda">
+
+
+Alternatively, to check installation you can also run:
 ```
 cqlsh
 ```
@@ -317,7 +353,6 @@ http://localhost:<port>/swagger-ui.html
 ## To Do
 
 Stuff left to do on this project:
-- Write log messages to Cassandra
 - Develop small UI page to capture that form data from frontend
 - Integrate UI with backend
 - Deploy UI into minikube
